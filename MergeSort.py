@@ -1,53 +1,53 @@
-def merge(arr,left,mid,right):
-    n1=mid-left+1 
-    n2=right-mid
-    
-    L=[0]*n1
-    R=[0]*n2
-    
-    for i in range(n1):
-        L[i]=arr[left+i]
-    for j in range(n2):
-        R[j]=arr[right+j+1]
-        
-    i=0
-    j=0
-    k=left
-    
-    while i<n1 and j<n2:
-        if L[i]<=R[j]:
-            arr[k]=L[i]
-            i+=1 
-        else:
-            arr[k]=R[j]
-            j+=1 
-        k+=1 
-        
-    while i<n1:
-        arr[k]=L[i]
-        i+=1 
-        k+=1 
-        
-    while i<n2:
-        arr[k]=R[j]
-        j+=1 
-        k+=1 
-        
-def mergeSort(arr,left,right):
-    if left<right:
-        mid=(left+right)//2 
-        
-        mergeSort(arr,left,mid)
-        mergeSort(arr,mid+1,right)
-        merge(arr,left,mid,right)
-        
-def printList(arr):
-    for i in arr:
-        print(i,end=" ")
+def mergeSort(array):
+    if len(array) > 1:
+
+        #  r is the point where the array is divided into two subarrays
+        r = len(array)//2
+        L = array[:r]
+        M = array[r:]
+
+        # Sort the two halves
+        mergeSort(L)
+        mergeSort(M)
+
+        i = j = k = 0
+
+        # Until we reach either end of either L or M, pick larger among
+        # elements L and M and place them in the correct position at A[p..r]
+        while i < len(L) and j < len(M):
+            if L[i] < M[j]:
+                array[k] = L[i]
+                i += 1
+            else:
+                array[k] = M[j]
+                j += 1
+            k += 1
+
+        # When we run out of elements in either L or M,
+        # pick up the remaining elements and put in A[p..r]
+        while i < len(L):
+            array[k] = L[i]
+            i += 1
+            k += 1
+
+        while j < len(M):
+            array[k] = M[j]
+            j += 1
+            k += 1
+
+
+# Print the array
+def printList(array):
+    for i in range(len(array)):
+        print(array[i], end=" ")
     print()
-    
-if __name__=="__main__":
-    arr=[16,21,11,8,12,22]
-    print("Orjinal Dizi:", printList(arr), end=" ")
-    mergeSort(arr,0,len(arr)-1)
-    print("Sıralanmış Dizi:", printList(arr), end=" ")
+
+
+# Driver program
+if __name__ == '__main__':
+    array = [6, 5, 12, 10, 9, 1]
+
+    mergeSort(array)
+
+    print("Sorted array is: ")
+    printList(array)
